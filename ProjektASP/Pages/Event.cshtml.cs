@@ -10,19 +10,20 @@ using ProjektASP.Models;
 
 namespace ProjektASP.Pages
 {
-    public class IndexModel : PageModel
+    public class EventModel : PageModel
     {
         private readonly EventsDbContext _context;
 
-        public IndexModel(EventsDbContext context)
+        public EventModel(EventsDbContext context)
         {
             _context = context;
         }
 
+        public IList<Event> Event { get;set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            Event = await _context.Events.ToListAsync();
         }
     }
 }
