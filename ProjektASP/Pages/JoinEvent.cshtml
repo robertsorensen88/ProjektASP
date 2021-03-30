@@ -43,15 +43,15 @@
         <div class="d-flex flex-column py-2">
             <h2>Successfully joined @Model.Event.Title! See you there!</h2>
             <div class="d-flex justify-content-center">
-                <a asp-page="/Event" type="button" class="btn btn-outline-primary">View More Events</a>
-                <a asp-page="/MyEvents" type="button" class="btn btn-outline-primary">View Your Events</a>
+                <a asp-page="/Event" type="button" class="btn bg-dark text-light m-2 p-2">View More Events</a>
+                <a asp-page="/MyEvents" type="button" class="btn bg-dark text-light m-2 p-2">View Your Events</a>
             </div>
         </div>
     }
     else
     {
         <form asp-route-id="@Model.Event.Id">
-            <input type="submit" class="btn btn-outline-primary" value="Join This Event" />
+            <input type="submit" class="btn bg-dark text-light m-2 p-2" value="Join This Event" />
         </form>
     }
 </div>
