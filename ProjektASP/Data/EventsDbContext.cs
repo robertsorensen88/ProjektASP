@@ -30,6 +30,7 @@ namespace ProjektASP.Data
                 UserName = "Kalle",
                 Email = "Kalle@gmail.com",
                 PhoneNumber = "0734-431267"
+
             };
 
             Event[] events = new Event[] {
@@ -52,6 +53,7 @@ namespace ProjektASP.Data
             };
 
             await AddRangeAsync(events);
+            await AddRangeAsync(attendee);
             await SaveChangesAsync();
 
         }
