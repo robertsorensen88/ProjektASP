@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,13 @@ namespace ProjektASP.Pages
 {
     public class JoinEventModel : PageModel
     {
-        private readonly ProjektASP.Data.EventsDbContext _context;
-
-        public JoinEventModel(ProjektASP.Data.EventsDbContext context)
+        private readonly EventsDbContext _context;
+        private readonly UserManager<Attendee> _userManager;
+        public JoinEventModel(EventsDbContext context,
+            UserManager<Attendee> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Event Event { get; set; }
@@ -43,18 +46,24 @@ namespace ProjektASP.Pages
                 return NotFound();
             }
 
-            Event = await _context.Events.Include(e => e.Attendees).FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
                 return NotFound();
             }
 
-            var attendee = await _context.Attendees.FirstOrDefaultAsync();
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Attendees
+                .Where(u => u.Id == userId)
+                .Include(u => u.Events)
+                .FirstOrDefaultAsync();
 
-            if (!Event.Attendees.Contains(attendee))
+            
+
+            if (!user.Events.Contains(Event))
             {
-                Event.Attendees.Add(attendee);
+                user.Events.Add(Event);
                 await _context.SaveChangesAsync();
             }
 

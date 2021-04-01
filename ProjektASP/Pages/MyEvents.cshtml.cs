@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -14,20 +15,30 @@ namespace ProjektASP.Pages
     [Authorize]
     public class MyEventsModel : PageModel
     {
-        
-        private readonly EventsDbContext _context;
 
-        public MyEventsModel(EventsDbContext context)
+        private readonly EventsDbContext _context;
+        private readonly UserManager<Attendee> _userManager;
+
+        public MyEventsModel(
+            EventsDbContext context,
+            UserManager<Attendee> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
-
         public IList<Event> Events { get; set; }
 
         public async Task OnGetAsync()
         {
-            var attendee = await _context.Attendees.Include(a => a.Events).FirstOrDefaultAsync();
-            Events = attendee.Events;
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Attendees
+                .Where(u => u.Id == userId)
+                .Include(u => u.Events)
+                .FirstOrDefaultAsync();
+
+            Events = user.Events;
+            
         }
     }
 }
