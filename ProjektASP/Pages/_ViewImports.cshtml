@@ -1,4 +1,8 @@
 ﻿@using ProjektASP
 @using ProjektASP.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Attendee> SignInManager
+@inject UserManager<Attendee> UserManager
 @namespace ProjektASP.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
