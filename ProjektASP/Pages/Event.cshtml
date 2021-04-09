@@ -1,9 +1,11 @@
 ﻿@page
 @model ProjektASP.Pages.EventModel
 
+@if (User.IsInRole("Organizer") || User.IsInRole("Admin")) {
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -43,11 +45,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SpotsAvailable)
             </td>
+            
             <td>
-                <a asp-page="./Edit" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Edit</a> 
-                <a asp-page="./JoinEvent" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Join Event</a> 
-                <a asp-page="./Delete" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Delete</a>
-            </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Attendee"))
+                {
+                    <a asp-page="./JoinEvent" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Join Event</a>
+                }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-page="./Edit" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Edit</a>
+                        <a asp-page="./Delete" class="bg-dark text-light m-2 p-2" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            
         </tr>
 }
     </tbody>

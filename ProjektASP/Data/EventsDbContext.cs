@@ -48,6 +48,15 @@ namespace ProjektASP.Data
             var result = await userManager.CreateAsync(admin, "Admin123!");
             await userManager.AddToRoleAsync(admin, "Admin");
 
+            Attendee organizer = new Attendee()
+            {
+                UserName = "Org",
+                Email = "org@org.com"
+            };
+
+            await userManager.CreateAsync(organizer, "Org123!");
+            await userManager.AddToRoleAsync(organizer, "Organizer");
+
             Event[] events = new Event[] {
                 new Event(){
                     Title="Summer camp",

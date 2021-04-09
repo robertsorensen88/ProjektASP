@@ -24,10 +24,20 @@
                         <li class="nav-item">
                             <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/Event">Events</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/MyEvents">My Events</a>
-                        </li>
-                    </ul>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Attendee"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/MyEvents">My Events</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/AdminAddingRoles">Edit User Roles</a>
+                            </li>
+                        }
+
+                        </ul>
                     <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
                         <li class="nav-item float-right">
                             <partial name="_LoginVisualPartial" />

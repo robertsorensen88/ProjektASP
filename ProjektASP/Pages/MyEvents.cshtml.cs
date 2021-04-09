@@ -12,7 +12,7 @@ using ProjektASP.Models;
 
 namespace ProjektASP.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Attendee" )]
     public class MyEventsModel : PageModel
     {
 

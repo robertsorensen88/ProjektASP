@@ -3,3 +3,29 @@
 @{
 }
 <h1>Hej Admin!</h1>
+@foreach (var user in UserManager.Users)
+{
+<div class="p-3 border-bottom border-dark">
+    <div class="d-flex flex-row p-3">
+        <label for="checkbox">@user.UserName</label>
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+                Dropdown Example
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Admin</a></li>
+                <li><a href="#">Organizer</a></li>
+                <li><a href="#">Attendee</a></li>
+            </ul>
+        </div>
+        <input type="checkbox" value="false" />
+
+
+    </div>
+    <br />
+    <label>@user.PhoneNumber</label>
+    <br />
+    <label>@user.Email</label>
+</div>
+}
