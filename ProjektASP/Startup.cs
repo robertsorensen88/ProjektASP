@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +27,23 @@ namespace ProjektASP
             services.AddDbContext<EventsDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventsDbContext"))
                     );
-            services.AddDefaultIdentity<Attendee>()
+            services.AddDefaultIdentity<Attendee>(options =>
+            {
+
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+                //options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvxyz";
+                options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedEmail = false;
+
+                options.Lockout.MaxFailedAccessAttempts = 3;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EventsDbContext>();
         }
 

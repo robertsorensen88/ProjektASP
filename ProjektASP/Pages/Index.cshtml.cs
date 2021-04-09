@@ -12,22 +12,24 @@ namespace ProjektASP.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly EventsDbContext _context;
         private readonly UserManager<Attendee> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public IndexModel(
             ILogger<IndexModel> logger,
             EventsDbContext context,
-            UserManager<Attendee> userManager)
+            UserManager<Attendee> userManager, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task OnGetAsync(bool? resetDb)
         {
             if (resetDb ?? false)
             {
-                await _context.ResetDb(_userManager);
+                await _context.ResetDb(_userManager, _roleManager);
             }
         }
     }

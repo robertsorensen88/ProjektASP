@@ -20,18 +20,33 @@ namespace ProjektASP.Data
 
 
 
-        public async Task ResetDb(UserManager<Attendee> userManager)
+        public async Task ResetDb(UserManager<Attendee> userManager, RoleManager<IdentityRole> roleManager)
         {
             await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
+
+            await roleManager.CreateAsync(new IdentityRole("Attendee"));
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            await roleManager.CreateAsync(new IdentityRole("Organizer"));
 
             Attendee attendee = new Attendee()
             {
                 UserName = "Kalle",
                 Email = "Kalle@gmail.com",
                 PhoneNumber = "0734-431267"
-
             };
+
+            await userManager.CreateAsync(attendee, "Kalle123!");
+            await userManager.AddToRoleAsync(attendee, "Attendee");
+
+            Attendee admin = new Attendee()
+            {
+                UserName = "Admin",
+                Email = "admin@admin.com"
+            };
+
+            var result = await userManager.CreateAsync(admin, "Admin123!");
+            await userManager.AddToRoleAsync(admin, "Admin");
 
             Event[] events = new Event[] {
                 new Event(){
@@ -53,7 +68,6 @@ namespace ProjektASP.Data
             };
 
             await AddRangeAsync(events);
-            await AddRangeAsync(attendee);
             await SaveChangesAsync();
 
         }
