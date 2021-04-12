@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  @if (User.Identity.IsAuthenticated) { @("bg-primary navbar-dark")} else { @("bg-white navbar-light")} border-bottom box-shadow mb-3"
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-white navbar-light border-bottom box-shadow mb-3"
 >
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -19,31 +19,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link bg-dark text-light rounded m-2" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/Event">Events</a>
+                            <a class="nav-link bg-dark text-light m-2 rounded" asp-area="" asp-page="/Event">Events</a>
                         </li>
                         @if (User.IsInRole("Admin") || User.IsInRole("Attendee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/MyEvents">My Events</a>
+                                <a class="nav-link bg-dark text-light m-2 rounded" asp-area="" asp-page="/MyEvents">My Events</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link bg-dark text-light m-2" asp-area="" asp-page="/AdminAddingRoles">Edit User Roles</a>
-                            </li>
-                        }
-
                         </ul>
-                    <ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
-                        <li class="nav-item float-right">
-                            <partial name="_LoginVisualPartial" />
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item ml-5">
+                            <h3>
+                                <a id="manage" class="nav-link text-dark font-weight-bold align-content-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
+                            </h3>
                         </li>
                     </ul>
+                }
                 </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <partial name="_LoginVisualPartial" />
+                </div>
+
+
             </div>
         </nav>
     </header>

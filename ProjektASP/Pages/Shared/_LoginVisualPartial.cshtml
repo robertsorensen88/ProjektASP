@@ -4,25 +4,38 @@
 @inject UserManager<Attendee> UserManager
 
 
-        <ul class="navbar-nav flex-row">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <li class="nav-item">
-                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-                </li>
-                <li class="nav-item">
-                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                        <button id="logout" type="submit" class="nav-link btn btn-link bg-dark text-light rounded">Logout</button>
-                    </form>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a class="nav-link bg-dark text-light rounded m-3 p-2" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link bg-dark text-light rounded m-3 p-2" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                </li>
-            }
-        </ul>
+<ul class="navbar-nav flex-grow-1 d-flex flex-row-reverse">
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link bg-dark btn text-light m-2 rounded">Logout</button>
+            </form>
+        </li>
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link bg-danger text-light m-2 rounded" asp-area="" asp-page="/AdminAddingRoles">Manage Users</a>
+            </li>
+        }
+        if (User.IsInRole("Organizer"))
+        {
+            <li class="nav-item">
+                <a class="nav-link bg-success text-light m-2 rounded" asp-area="" asp-page="/OrganizerAddEvent">Add Event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link bg-success text-light m-2 rounded" asp-area="" asp-page="/OrganizerOrganizeEvent">Organize Event</a>
+            </li>
+        }
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-light m-2 rounded" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-light m-2 rounded" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>
