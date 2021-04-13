@@ -1,9 +1,7 @@
 ﻿@page
 @model ProjektASP.Pages.OrganizerOrganizeEventModel
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -44,9 +42,9 @@
                 @Html.DisplayFor(modelItem => item.SpotsAvailable)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Edit" class="bg-dark text-light p-2 m-2 rounded" asp-route-id="@item.Id">Edit</a> 
+                <a asp-page="./Details" class="bg-dark text-light p-2 m-2 rounded" asp-route-id="@item.Id">Details</a> 
+                <a asp-page="./Delete" class="bg-dark text-light p-2 m-2 rounded" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
