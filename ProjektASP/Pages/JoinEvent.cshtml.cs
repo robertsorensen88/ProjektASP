@@ -64,9 +64,10 @@ namespace ProjektASP.Pages
             if (!user.Events.Contains(Event))
             {
                 user.Events.Add(Event);
+                _context.Events.Where(e => e.Id == id).First().SpotsAvailable--;
                 await _context.SaveChangesAsync();
             }
-
+            
             return Page();
         }
     }

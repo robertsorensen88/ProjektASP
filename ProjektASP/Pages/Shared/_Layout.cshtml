@@ -61,7 +61,10 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - ProjektASP - <a asp-area="" asp-page="/Privacy">Privacy</a>
-            <a type="button" asp-route-ResetDb="True" class="bg-dark text-light">RESET DB</a>
+            @if (User.IsInRole("Admin")){
+                        <a type="button" asp-route-ResetDb="True" class="bg-dark text-light">RESET DB</a> 
+            }
+            
         </div>
     </footer>
 

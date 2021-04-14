@@ -21,6 +21,7 @@ namespace ProjektASP.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Attendee> _signInManager;
         private readonly UserManager<Attendee> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -83,7 +84,7 @@ namespace ProjektASP.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    await _userManager.AddToRoleAsync(user, "Attendee");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

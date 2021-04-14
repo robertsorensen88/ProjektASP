@@ -2,8 +2,8 @@
 @model ProjektASP.Pages.AdminAddingRolesModel
 @{
 }
+@inject UserManager<Attendee> usermanager
 <h1>Hej Admin!</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -16,6 +16,7 @@
             <th>
                 Is Organizer
             </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -29,13 +30,20 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <input type="checkbox" />
-</td>
-
-
-
-
-</tr>
+   
+                 @if (usermanager.IsInRoleAsync(item, "Organizer").Result)
+                 {
+                    <form method="post" asp-route-id="@item.Id">
+                        <input type="checkbox" onchange="this.form.submit()" checked />
+                    </form>
+                 }
+                else { 
+                    <form method="post" asp-route-id="@item.Id">
+                        <input type="checkbox" onchange="this.form.submit()" />
+                    </form>
+                }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

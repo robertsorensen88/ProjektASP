@@ -57,6 +57,15 @@ namespace ProjektASP.Data
             await userManager.CreateAsync(organizer, "Org123!");
             await userManager.AddToRoleAsync(organizer, "Organizer");
 
+            Attendee organizers = new Attendee()
+            {
+                UserName = "Org1",
+                Email = "org@org1.com"
+            };
+            await userManager.CreateAsync(organizers, "Org123!");
+            await userManager.AddToRoleAsync(organizers, "Organizer");
+
+
             Event[] events = new Event[] {
                 new Event(){
                     Title="Summer camp",
@@ -64,7 +73,7 @@ namespace ProjektASP.Data
                     Place="Colorado springs",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
-                    //Organizer= organizers[0],
+                    
                 },
                 new Event(){
                     Title="Moonhaven",
