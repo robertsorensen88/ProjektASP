@@ -31,7 +31,8 @@ namespace ProjektASP.Pages
             }
 
             Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
-            Attendee = await _context.Attendees.Include(m => m.Events).FirstOrDefaultAsync();
+            var userid = _userManager.GetUserId(User);
+            Attendee = await _context.Attendees.Where(m => m.Id == userid).Include(m => m.Events).FirstOrDefaultAsync();
 
             if (Event == null)
             {
@@ -53,7 +54,7 @@ namespace ProjektASP.Pages
                 return NotFound();
             }
 
-            var userId = _userManager.GetUserId(User);
+            var userId =  _userManager.GetUserId(User);
             var user = await _context.Attendees
                 .Where(u => u.Id == userId)
                 .Include(u => u.Events)
@@ -61,7 +62,7 @@ namespace ProjektASP.Pages
 
 
 
-            if (!user.Events.Contains(Event))
+            if (!user.Events.Contains(Event) && Event.SpotsAvailable >= 1)
             {
                 user.Events.Add(Event);
                 _context.Events.Where(e => e.Id == id).First().SpotsAvailable--;

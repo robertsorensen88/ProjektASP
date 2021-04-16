@@ -48,22 +48,21 @@ namespace ProjektASP.Data
             var result = await userManager.CreateAsync(admin, "Admin123!");
             await userManager.AddToRoleAsync(admin, "Admin");
 
-            Attendee organizer = new Attendee()
-            {
-                UserName = "Org",
-                Email = "org@org.com"
+            Attendee[] organizers = new Attendee[] {
+                new Attendee(){
+                    UserName = "Org",
+                    Email = "Org@org.com",
+                },
+                new Attendee(){
+                    UserName = "Org1",
+                    Email = "org1@org1.com",
+                },
             };
-
-            await userManager.CreateAsync(organizer, "Org123!");
-            await userManager.AddToRoleAsync(organizer, "Organizer");
-
-            Attendee organizers = new Attendee()
+            foreach (var org in organizers)
             {
-                UserName = "Org1",
-                Email = "org@org1.com"
-            };
-            await userManager.CreateAsync(organizers, "Org123!");
-            await userManager.AddToRoleAsync(organizers, "Organizer");
+                await userManager.CreateAsync(org, "Org123!");
+                await userManager.AddToRoleAsync(org, "Organizer");
+            }
 
 
             Event[] events = new Event[] {
@@ -81,7 +80,7 @@ namespace ProjektASP.Data
                     Place="Blackpark",
                     Date=DateTime.Now.AddDays(12),
                     SpotsAvailable=23,
-                    //Organizer= organizers[0],
+                    
                 },
             };
 
