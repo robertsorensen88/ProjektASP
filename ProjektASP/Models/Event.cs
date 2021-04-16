@@ -13,8 +13,6 @@ namespace ProjektASP.Models
         public string Place { get; set; }
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
-
-        public Organiser Organiser { get; set; }
         public List<Attendee> Attendees { get; set; }
     }
 }

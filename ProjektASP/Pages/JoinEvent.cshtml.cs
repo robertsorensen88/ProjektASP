@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ProjektASP.Data;
 using ProjektASP.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProjektASP.Pages
 {
@@ -23,6 +21,7 @@ namespace ProjektASP.Pages
         }
 
         public Event Event { get; set; }
+        public Attendee Attendee { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,6 +31,7 @@ namespace ProjektASP.Pages
             }
 
             Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            Attendee = await _context.Attendees.Include(m => m.Events).FirstOrDefaultAsync();
 
             if (Event == null)
             {
@@ -59,7 +59,7 @@ namespace ProjektASP.Pages
                 .Include(u => u.Events)
                 .FirstOrDefaultAsync();
 
-            
+
 
             if (!user.Events.Contains(Event))
             {
@@ -67,7 +67,7 @@ namespace ProjektASP.Pages
                 _context.Events.Where(e => e.Id == id).First().SpotsAvailable--;
                 await _context.SaveChangesAsync();
             }
-            
+
             return Page();
         }
     }
