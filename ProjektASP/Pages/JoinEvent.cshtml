@@ -49,20 +49,23 @@
 </div> }
 else
 {
-if (Model.Event.SpotsAvailable > 0 && !Model.Attendee.Events.Contains(Model.Event))
-{
-<form asp-route-id="@Model.Event.Id">
-    <input type="submit" class="btn bg-dark text-light m-2 p-2 rounded" value="Join This Event" />
-</form> }
-else if (Model.Event.SpotsAvailable <= 0)
-{
-<form>
-    <input type="submit" class="btn bg-danger text-light m-2 p-2 rounded disabled" value="No tickets available" />
-</form> }
-else if (Model.Attendee.Events.Contains(Model.Event))
-{
-<form>
-    <input type="submit" class="btn bg-warning text-light km-2 p-2 rounded disabled" value="Already joined!" />
-</form>         }
+    if (Model.Event.SpotsAvailable > 0 && !Model.Attendee.Events.Contains(Model.Event))
+    {
+        <form asp-route-id="@Model.Event.Id">
+            <input type="submit" class="btn bg-dark text-light m-2 p-2 rounded" value="Join This Event" />
+        </form> 
+    }
+    else if (Model.Event.SpotsAvailable <= 0)
+    {
+        <form>
+            <input type="submit" class="btn bg-danger text-light m-2 p-2 rounded disabled" value="No tickets available" />
+        </form> 
+    }
+    else if (Model.Attendee.Events.Contains(Model.Event))
+    {
+        <form>
+            <input type="submit" class="btn bg-warning text-light m-2 p-2 rounded disabled" value="Already joined!" />
+        </form>        
+    }
 }
 </div>

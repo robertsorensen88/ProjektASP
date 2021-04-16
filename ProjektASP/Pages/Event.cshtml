@@ -49,12 +49,12 @@
             <td>
                 @if (User.IsInRole("Admin") || User.IsInRole("Attendee"))
                 {
-                    <a asp-page="./JoinEvent" class="bg-dark text-light m-1 p-2 rounded btn" asp-route-id="@item.Id">Join Event</a>
+                    <a asp-page="./JoinEvent" class="bg-dark text-light ml-1 p-1 rounded btn" asp-route-id="@item.Id">Join Event</a>
                 }
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-page="./Edit" class="bg-dark text-light m-1 p-2 rounded btn" asp-route-id="@item.Id">Edit</a>
-                        <a asp-page="./Delete" class="bg-dark text-light m-1 p-2 rounded btn" asp-route-id="@item.Id">Delete</a>
+                        <a asp-page="./Edit" class="bg-dark text-light ml-1 p-1 rounded btn" asp-route-id="@item.Id">Edit</a>
+                        <a asp-page="./Delete" class="bg-dark text-light ml-1 p-1 rounded btn" asp-route-id="@item.Id">Delete</a>
                     }
                 </td>
             
